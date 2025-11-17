@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stellar Blaster</title>
+    <meta charset="UTF-8">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1e1e1e 0%, #2d2d30 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #cccccc;
+        }
+        #gameContainer {
+            text-align: center;
+            padding: 20px;
+        }
+        #gameCanvas {
+            border: 2px solid #ff8800;
+            border-radius: 8px;
+            background: #1a1a1a;
+            box-shadow: 0 4px 20px rgba(255, 136, 0, 0.3);
+            display: block;
+            margin: 20px auto;
+        }
+        h1 {
+            color: #ff8800;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        .info {
+            color: #999999;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .controls {
+            margin-top: 15px;
+            color: #cccccc;
+            font-size: 13px;
+        }
+        .score {
+            color: #4ade80;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="gameContainer">
+        <h1>🎮 Stellar Blaster</h1>
+        <div class="info">Fast-paced space shooter where you pilot a customizable starfighter through enemy fleets, collect po</div>
+        <canvas id="gameCanvas" width="800" height="600"></canvas>
+        <div class="score">Score: <span id="score">0</span></div>
+        <div class="controls">
+            Use ARROW KEYS or A/D to move | SPACE to shoot
+        </div>
+        <div id="status" style="margin-top: 10px; color: #4ade80; font-size: 12px;">Game loaded successfully!</div>
+    </div>
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const scoreElement = document.getElementById('score');
+        
+        // Game state
+        let score = 0;
+        const canvasWidth = 800;
+        const canvasHeight = 600;
+        
+        
+        // Shooter Game
+        let player = {
+            x: 400,
+            y: 540,
+            width: 40,
+            height: 40,
+            speed: 5,
+            color: '#00ffff'
+        };
+        
+        let bullets = [];
+        let enemies = [];
+        let keys = {};
+        let lastShot = 0;
+        
+        // Create enemies
+        for (let i = 0; i < 5; i++) {
+            enemies.push({
+                x: 100 + i * 150,
+                y: 50 + Math.random() * 100,
+                width: 30,
+                height: 30,
+                speed: 1,
+                color: '#ff0000'
+            });
+        }
+        
+        document.addEventListener('keydown', (e) => {
+            keys[e.key.toLowerCase()] = true;
+            if (e.key === ' ') {
+                const now = Date.now();
+                if (now - lastShot > 200) {
+                    bullets.push({
+                        x: player.x + player.width / 2,
+                        y: player.y,
+                        width: 4,
+                        height: 10,
+                        speed: 8
+                    });
+                    lastShot = now;
+                }
+            }
+        });
+        
+        document.addEventListener('keyup', (e) => {
+            keys[e.key.toLowerCase()] = false;
+        });
+        
+        function update() {
+            // Move player
+            if (keys['arrowleft'] || keys['a']) player.x -= player.speed;
+            if (keys['arrowright'] || keys['d']) player.x += player.speed;
+            
+            player.x = Math.max(0, Math.min(canvas.width - player.width, player.x));
+            
+            // Move bullets
+            bullets = bullets.filter(bullet => {
+                bullet.y -= bullet.speed;
+                return bullet.y > 0;
+            });
+            
+            // Move enemies
+            enemies.forEach(enemy => {
+                enemy.x += enemy.speed;
+                if (enemy.x > canvas.width || enemy.x < 0) {
+                    enemy.speed = -enemy.speed;
+                    enemy.y += 30;
+                }
+            });
+            
+            // Collision detection
+            bullets.forEach((bullet, bi) => {
+                enemies.forEach((enemy, ei) => {
+                    if (bullet.x < enemy.x + enemy.width &&
+                        bullet.x + bullet.width > enemy.x &&
+                        bullet.y < enemy.y + enemy.height &&
+                        bullet.y + bullet.height > enemy.y) {
+                        bullets.splice(bi, 1);
+                        enemies.splice(ei, 1);
+                        score += 100;
+                        scoreElement.textContent = score;
+                    }
+                });
+            });
+        }
+        
+        function render() {
+            ctx.fillStyle = '#0a0a1a';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw player
+            ctx.fillStyle = player.color;
+            ctx.fillRect(player.x, player.y, player.width, player.height);
+            
+            // Draw bullets
+            ctx.fillStyle = '#ffff00';
+            bullets.forEach(bullet => {
+                ctx.fillRect(bullet.x, bullet.y, bullet.width, bullet.height);
+            });
+            
+            // Draw enemies
+            enemies.forEach(enemy => {
+                ctx.fillStyle = enemy.color;
+                ctx.fillRect(enemy.x, enemy.y, enemy.width, enemy.height);
+            });
+        }
+        
+        function gameLoop() {
+            update();
+            render();
+            requestAnimationFrame(gameLoop);
+        }
+        
+        gameLoop();
+    
+        
+        console.log('🎮 Applaa game preview loaded successfully! Type: shooter');
+    </script>
+</body>
+</html>

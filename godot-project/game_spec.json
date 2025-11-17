@@ -1,0 +1,118 @@
+{
+  "game": {
+    "name": "Stellar Blaster",
+    "type": "2D",
+    "description": "Fast-paced space shooter where you pilot a customizable starfighter through enemy fleets, collect power-ups, and face massive boss ships across multiple star systems.",
+    "genre": "shooter",
+    "version": "1.0.0"
+  },
+  "settings": {
+    "window": {
+      "width": 1280,
+      "height": 720,
+      "resizable": true,
+      "fullscreen": false
+    },
+    "physics": {
+      "enabled": true
+    },
+    "rendering": {}
+  },
+  "scenes": [],
+  "assets": {
+    "sprites": [
+      {
+        "name": "player_ship",
+        "path": "res://assets/sprites/player_ship.png",
+        "type": "character"
+      },
+      {
+        "name": "scout_fighter",
+        "path": "res://assets/sprites/scout_fighter.png",
+        "type": "enemy"
+      },
+      {
+        "name": "interceptor",
+        "path": "res://assets/sprites/interceptor.png",
+        "type": "enemy"
+      },
+      {
+        "name": "heavy_bomber",
+        "path": "res://assets/sprites/heavy_bomber.png",
+        "type": "enemy"
+      },
+      {
+        "name": "command_carrier",
+        "path": "res://assets/sprites/command_carrier.png",
+        "type": "boss"
+      },
+      {
+        "name": "laser_bolt",
+        "path": "res://assets/sprites/laser_bolt.png",
+        "type": "projectile"
+      },
+      {
+        "name": "powerup_shield",
+        "path": "res://assets/sprites/powerup_shield.png",
+        "type": "pickup"
+      },
+      {
+        "name": "powerup_weapon",
+        "path": "res://assets/sprites/powerup_weapon.png",
+        "type": "pickup"
+      },
+      {
+        "name": "asteroid",
+        "path": "res://assets/sprites/asteroid.png",
+        "type": "obstacle"
+      },
+      {
+        "name": "space_background",
+        "path": "res://assets/sprites/space_background.png",
+        "type": "background"
+      }
+    ],
+    "sounds": [
+      {
+        "name": "laser_shoot",
+        "path": "res://assets/sounds/laser_shoot.wav",
+        "type": "sfx"
+      },
+      {
+        "name": "explosion",
+        "path": "res://assets/sounds/explosion.wav",
+        "type": "sfx"
+      },
+      {
+        "name": "powerup_collect",
+        "path": "res://assets/sounds/powerup_collect.wav",
+        "type": "sfx"
+      },
+      {
+        "name": "shield_activate",
+        "path": "res://assets/sounds/shield_activate.wav",
+        "type": "sfx"
+      },
+      {
+        "name": "boss_alert",
+        "path": "res://assets/sounds/boss_alert.wav",
+        "type": "sfx"
+      }
+    ],
+    "music": [
+      {
+        "name": "level_theme",
+        "path": "res://assets/music/level_theme.ogg"
+      },
+      {
+        "name": "boss_battle",
+        "path": "res://assets/music/boss_battle.ogg"
+      },
+      {
+        "name": "main_menu",
+        "path": "res://assets/music/main_menu.ogg"
+      }
+    ]
+  },
+  "scripts": []
+}
